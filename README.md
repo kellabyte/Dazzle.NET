@@ -88,7 +88,7 @@ select * from users where firstname = "Bob"
 Dazzle's query execution plan does the following:
 
 1. Get the value with the key "/users/index/firstname:Bob" which returns "/users/5678"
-2. Seek to the key "/users/1234"
+2. Seek to the key "/users/5678"
 3. Create an enumerator
 4. Use the enumerator to scan sequentially to retrieve the values of all the columns in the row.
 5. When the enumerator scans and finds the next row the query ends and the results are returned to the client.
