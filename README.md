@@ -62,8 +62,7 @@ Query executed in 00:00:00.0035229
 Since Dazzle currently uses LevelDB which is a key/value store and is using SSTables (sorted string tables) 
 I needed to model rows, columns and indexes in a way that would optimize sequential reads when scanning.
 
-If we had a table called Users with columns of UserId (row key) FirstName, LastName and Email and a user with the 
-UserId of 12345 the LevelDB store would look like:
+If we had a table called Users with the columns FirstName, LastName and Email the LevelDB store would look like:
 
 ```
 Key                               | Value
