@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SimpleInjector.Integration.Web.Mvc</name>
+    </assembly>
+    <members>
+        <member name="T:SimpleInjector.Integration.Web.Mvc.SimpleInjectorDependencyResolver">
+            <summary>MVC Dependency resolver for Simple Injector.</summary>
+        </member>
+        <member name="M:SimpleInjector.Integration.Web.Mvc.SimpleInjectorDependencyResolver.#ctor(SimpleInjector.Container)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SimpleInjector.Integration.Web.Mvc.SimpleInjectorDependencyResolver"/> class.
+            </summary>
+            <param name="container">The container.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when <paramref name="container"/> is a null
+            reference.</exception>
+        </member>
+        <member name="M:SimpleInjector.Integration.Web.Mvc.SimpleInjectorDependencyResolver.GetService(System.Type)">
+            <summary>Resolves singly registered services that support arbitrary object creation.</summary>
+            <param name="serviceType">The type of the requested service or object.</param>
+            <returns>The requested service or object.</returns>
+        </member>
+        <member name="M:SimpleInjector.Integration.Web.Mvc.SimpleInjectorDependencyResolver.GetServices(System.Type)">
+            <summary>Resolves multiply registered services.</summary>
+            <param name="serviceType">The type of the requested services.</param>
+            <returns>The requested services.</returns>
+        </member>
+        <member name="P:SimpleInjector.Integration.Web.Mvc.SimpleInjectorDependencyResolver.Container">
+            <summary>Gets the container.</summary>
+            <value>The <see cref="P:SimpleInjector.Integration.Web.Mvc.SimpleInjectorDependencyResolver.Container"/>.</value>
+        </member>
+        <member name="T:SimpleInjector.SimpleInjectorMvcExtensions">
+            <summary>
+            Extension methods for integrating Simple Injector with ASP.NET MVC applications.
+            </summary>
+        </member>
+        <member name="M:SimpleInjector.SimpleInjectorMvcExtensions.RegisterMvcAttributeFilterProvider(SimpleInjector.Container)">
+            <summary>Registers a <see cref="T:System.Web.Mvc.IFilterProvider"/> that allows implicit property injection into
+            the filter attributes that are returned from the provider.</summary>
+            <param name="container">The container that should be used for injecting properties into attributes
+            that the MVC framework uses.</param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown when the <paramref name="container"/> is a null reference.</exception>
+        </member>
+        <member name="M:SimpleInjector.SimpleInjectorMvcExtensions.RegisterMvcControllers(SimpleInjector.Container,System.Reflection.Assembly[])">
+            <summary>
+            Registers the MVC <see cref="T:System.Web.Mvc.IController"/> instances (which name end with 'Controller') that are 
+            declared as public non-abstract in the supplied set of <paramref name="assemblies"/>.
+            </summary>
+            <param name="container">The container the controllers should be registered in.</param>
+            <param name="assemblies">The assemblies to search.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when either the <paramref name="container"/> or the
+            <paramref name="assemblies"/> are a null reference (Nothing in VB).</exception>
+        </member>
+    </members>
+</doc>

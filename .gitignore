@@ -4,3 +4,11 @@ obj
 
 # mstest test results
 TestResults
+
+.hg*
+*.vspscc
+*_ReSharper*
+*.suo
+*.vsmdi
+*.ncrunchsolution*
+*.DotSettings.user

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SimpleInjector.Packaging</name>
+    </assembly>
+    <members>
+        <member name="T:SimpleInjector.PackageExtensions">
+            <summary>
+            Extension methods for working with packages.
+            </summary>
+        </member>
+        <member name="M:SimpleInjector.PackageExtensions.RegisterPackages(SimpleInjector.Container)">
+            <summary>
+            Loads all <see cref="T:SimpleInjector.Packaging.IPackage"/> implementations from assemblies that are loaded in the current
+            AppDomain, and calls their <see cref="M:SimpleInjector.Packaging.IPackage.RegisterServices(SimpleInjector.Container)">Register</see> method. 
+            Note that only publicly exposed classes that contain a public default constructor will be loaded. 
+            </summary>
+            <param name="container">The container to which the packages will be applied to.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the <paramref name="container"/> is a null
+            reference.</exception>
+        </member>
+        <member name="M:SimpleInjector.PackageExtensions.RegisterPackages(SimpleInjector.Container,System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Loads all <see cref="T:SimpleInjector.Packaging.IPackage"/> implementations from the given set of 
+            <paramref name="assemblies"/> and calls their <see cref="M:SimpleInjector.Packaging.IPackage.RegisterServices(SimpleInjector.Container)">Register</see> method. 
+            Note that only publicly exposed classes that contain a public default constructor will be loaded. 
+            </summary>
+            <param name="container">The container to which the packages will be applied to.</param>
+            <param name="assemblies">The assemblies that will be searched for packages.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the <paramref name="container"/> is a null
+            reference.</exception>
+        </member>
+        <member name="T:SimpleInjector.Packaging.IPackage">
+            <summary>
+            Contract for types allow registering a set of services.
+            </summary>
+            <example>
+            The following example shows an implementation of an <see cref="T:SimpleInjector.Packaging.IPackage"/>.
+            <code lang="cs"><![CDATA[
+            public class BusinessLayerPackage : IPackage
+            {
+                public void RegisterServices(Container container)
+                {
+                    container.Register<IUserRepository, DatabaseUserRepository>();
+                    container.Register<ICustomerRepository, DatabaseCustomerRepository>();
+                }
+            }
+            ]]></code>
+            The following example shows how to load all defined packages, using the 
+            <see cref="M:SimpleInjector.PackageExtensions.RegisterPackages(SimpleInjector.Container)">RegisterPackages</see> method. 
+            <code lang="cs"><![CDATA[
+            container.RegisterPackages();
+            ]]></code>
+            </example>
+        </member>
+        <member name="M:SimpleInjector.Packaging.IPackage.RegisterServices(SimpleInjector.Container)">
+            <summary>Registers the set of services in the specified <paramref name="container"/>.</summary>
+            <param name="container">The container the set of services is registered into.</param>
+        </member>
+    </members>
+</doc>
