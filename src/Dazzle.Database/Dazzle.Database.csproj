@@ -70,11 +70,11 @@
     <Compile Include="QueryResult.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="leveldb.dll">
+    <Content Include="..\..\lib\LevelDB\leveldb.dll">
+      <Link>leveldb.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
