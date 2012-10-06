@@ -39,9 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MessageType.cs" />
     <Compile Include="IDazzleDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System.Net\IPEndPointParser.cs" />
+    <Compile Include="TcpFrame.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

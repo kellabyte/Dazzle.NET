@@ -57,6 +57,10 @@
       <Project>{ea5ce7f4-c5cc-460c-8f9a-a851e1729d9a}</Project>
       <Name>Linc.Database</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Dazzle.Server\Dazzle.Server.csproj">
+      <Project>{d555dc62-2d52-456a-a699-0b898011f166}</Project>
+      <Name>Dazzle.Server</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

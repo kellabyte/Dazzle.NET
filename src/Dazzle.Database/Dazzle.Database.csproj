@@ -56,18 +56,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DazzleDatabase.cs" />
+    <Compile Include="Extensions\SortedListExtensions.cs" />
     <Compile Include="Query\DqlQueryPlanBuilder.cs" />
     <Compile Include="Query\DqlQueryReader.cs" />
     <Compile Include="Query\DqlQueryGrammar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Query\Operations\IQueryOperation.cs" />
+    <Compile Include="Operations\IQueryOperation.cs" />
     <Compile Include="Query\IQueryProcessor.cs" />
-    <Compile Include="Query\LevelDbQueryProcessor.cs" />
-    <Compile Include="Query\Operations\IOperationBuilder.cs" />
-    <Compile Include="Query\Operations\LevelDbSelectOperation.cs" />
-    <Compile Include="Query\Operations\SelectOperationBuilder.cs" />
+    <Compile Include="Query\QueryProcessor.cs" />
+    <Compile Include="Operations\IOperationBuilder.cs" />
+    <Compile Include="KeyType.cs" />
+    <Compile Include="Operations\SelectOperation.cs" />
+    <Compile Include="Operations\UpdateOperation.cs" />
+    <Compile Include="Operations\SelectOperationBuilder.cs" />
+    <Compile Include="Operations\UpdateOperationBuilder.cs" />
     <Compile Include="Query\QueryExecutionPlan.cs" />
     <Compile Include="QueryResult.cs" />
+    <Compile Include="Storage\InMemoryStorage.cs" />
+    <Compile Include="Storage\IStorage.cs" />
+    <Compile Include="Storage\LevelDbStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\lib\LevelDB\leveldb.dll">

@@ -10,5 +10,7 @@ TestResults
 *_ReSharper*
 *.suo
 *.vsmdi
+*.crunchsolution*
 *.ncrunchsolution*
+*.ncrunchproject
 *.DotSettings.user

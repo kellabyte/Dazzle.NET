@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using Dazzle.Query.Operations;
-using LevelDB;
+using Dazzle.Operations;
+using Dazzle.Storage;
 
 namespace Dazzle.Query
 {
@@ -10,16 +10,16 @@ namespace Dazzle.Query
     /// </summary>
     public class QueryExecutionPlan
     {
-        private DB db;
+        private IStorage storage;
 
-        public QueryExecutionPlan(DB db)
+        public QueryExecutionPlan(IStorage storage)
         {
-            if (db == null)
+            if (storage == null)
             {
-                throw new ArgumentNullException("db");
+                throw new ArgumentNullException("storage");
             }
 
-            this.db = db;
+            this.storage = storage;
             this.Operations = new List<IQueryOperation>();
         }
 
@@ -32,14 +32,8 @@ namespace Dazzle.Query
             var result = new QueryResult();
             foreach (var operation in this.Operations)
             {
-                // TODO: Row shouldn't be created here.
-                var results = operation.Execute(db);
-                var row = new Row();
-                foreach (var r in results)
-                {
-                    row.Columns.Add(r.Key, r.Value);
-                }
-                result.Rows.Add(row);
+                var rows = operation.Execute(this.storage);
+                result.Rows.InsertRange(result.Rows.Count, rows);
             }
             return result;
         }

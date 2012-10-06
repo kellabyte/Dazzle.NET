@@ -191,15 +191,16 @@ namespace Dazzle.Server
                     return;
                 }
             }
-            string data = this.Encoding.GetString(client.Buffer, 0, read);
+            //string data = this.Encoding.GetString(client.Buffer, 0, read);
 
             //Do something with the data object here.
-            HandleData(data, client.TcpClient);
+            //HandleData(data, client.TcpClient);
+            HandleData(client.Buffer, client.TcpClient);
 
             networkStream.BeginRead(client.Buffer, 0, client.Buffer.Length, ReadCallback, client);
         }
 
-        protected virtual void HandleData(string data, TcpClient client)
+        protected virtual void HandleData(byte[] data, TcpClient client)
         {
 
         }

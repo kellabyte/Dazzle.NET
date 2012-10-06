@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using Dazzle.Query.Operations;
+using Dazzle.Operations;
 using Irony.Parsing;
 
 namespace Dazzle.Query
@@ -53,7 +54,10 @@ namespace Dazzle.Query
         {
             foreach (var builder in this.builders)
             {
-                builder.BuildOperation(scope, node, plan);
+                if (scope.Count >= 2 && scope.ElementAt(scope.Count - 2) == builder.OperationName)
+                {
+                    builder.BuildOperation(scope, node, plan);
+                }
             }
         }
     }

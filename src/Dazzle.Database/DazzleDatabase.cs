@@ -4,12 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Dazzle.Query;
-using Dazzle.Query.Operations;
 using Irony.Parsing;
-using LevelDB;
 using SimpleInjector;
 using SimpleInjector.Extensions;
+using Dazzle.Operations;
+using Dazzle.Query;
+using Dazzle.Storage;
 
 namespace Dazzle
 {
@@ -21,17 +21,22 @@ namespace Dazzle
         private bool disposed;
         private bool opened = false;
         private Container container;
-        private string path;
-        private DB db;
+        private IStorage storage;
 
         public DazzleDatabase(string path)
+            : this(new LevelDbStorage(path))
         {
-            if (string.IsNullOrWhiteSpace(path))
+        }
+
+        public DazzleDatabase(IStorage storage)
+        {
+            if (storage == null)
             {
-                throw new ArgumentNullException("path");
+                throw new ArgumentNullException("storage");
             }
-            this.path = path;
+            this.storage = storage;
             Initialize();
+            Open();
         }
 
         ~DazzleDatabase()
@@ -64,10 +69,14 @@ namespace Dazzle
             container = new Container();
             container.Register<Grammar, DqlGrammar>();
             container.Register<LanguageData>();
-            container.Register<IQueryProcessor, LevelDbQueryProcessor>();
+            container.Register<IQueryProcessor, QueryProcessor>();
             container.Register<DqlQueryReader>();
             container.Register<DqlQueryPlanBuilder>();
-            container.RegisterAll(typeof(IOperationBuilder), new Type[] { typeof(SelectOperationBuilder) });
+            container.RegisterAll(typeof(IOperationBuilder), new Type[]
+                {
+                    typeof(SelectOperationBuilder),
+                    typeof(UpdateOperationBuilder)
+                });
         }
 
         /// <summary>
@@ -75,10 +84,9 @@ namespace Dazzle
         /// </summary>
         private void Open()
         {
-            var options = new Options { CreateIfMissing = true };
-            db = new DB(options, path);
+            container.RegisterSingle<IStorage>(storage);
+            storage.Open();
             opened = true;
-            container.RegisterSingle<DB>(db);
         }
 
         /// <summary>
@@ -86,9 +94,9 @@ namespace Dazzle
         /// </summary>
         private void Close()
         {
-            if (db != null)
+            if (storage != null)
             {
-                db.Dispose();
+                storage.Dispose();
                 opened = false;
             }
         }
