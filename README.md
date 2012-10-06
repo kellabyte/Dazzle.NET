@@ -62,39 +62,40 @@ Query executed in 00:00:00.0035229
 Since Dazzle currently uses LevelDB which is a key/value store and is using SSTables (sorted string tables) 
 I needed to model rows, columns and indexes in a way that would optimize sequential reads when scanning.
 
-If we had a table called Users with the columns FirstName, LastName and Email the LevelDB store would look like:
-
 ```
-Key                               | Value
--------------------------------------------------------------
-/users                              table
-/users/1234                         row
-/users/1234:firstname               Adam
-/users/1234:lastname                Smith
-/users/1234:email                   asmith@gmail.com
-/users/5678                         row
-/users/5678:firstname               Bob
-/users/5678:lastname                Johnson
-/users/5678:email                   bjohnson@gmail.com
-/users/index/firstname              index
-/users/index/firstname:bob          /users/5678
+-------------------------------------------------------------------
+Key                                  | Value
+-------------------------------------------------------------------
+/users                               | table
+/users/$index/column0                | indexed-column
+/users/$index/column0/bob1           | indexed-term
+/users/$index/column0/bob1/0         | /users/0
+/users/$index/column0/bob1/1         | /users/1
+/users/$index/column1                | indexed-column
+/users/$index/column1/bob1           | indexed-term
+/users/$index/column1/bob1/0         | /users/0
+/users/$index/column1/bob1/1         | /users/1
+/users/0                             | row
+/users/0/$column/column0             | bob1
+/users/0/$column/column1             | bob1
+/users/1                             | row
+/users/1/$column/column0             | bob1
+/users/1/$column/column1             | bob1
 ```
 Given the query
 
 ```
-select * from users where firstname = "Bob" 
+select * from users where column0 = "bob1" 
 ```
-
 Dazzle's query execution plan does the following:
 
-1. Get the value with the key "/users/index/firstname:Bob" which returns "/users/5678"
-2. Seek to the key "/users/5678"
-3. Create an enumerator
-4. Use the enumerator to scan sequentially to retrieve the values of all the columns in the row.
-5. When the enumerator scans and finds the next row the query ends and the results are returned to the client.
+1. Seek to the key "/users/$index/column0/bob1"
+2. Scan down to collect all the row keys for rows that are in this indexed column such as /users/0 and /users/1
+3. For each row key collected seek to the row such as /users/0
+4. Scan the columns for the row and collect the columns and their values that are defined in the select clause or all if * was specified.
+5. When the enumerator scans and finds the next row the query repeats #3 and #4 for the next rows.
 
 ## Notes
-- Update statements coming soon. Right now the benchmark tests pre-load data manually through LevelDB.
 - Currently tested on Windows but should be trivial to port to other platforms.
 - Everything is a string. Types will be introduced soon.
 
