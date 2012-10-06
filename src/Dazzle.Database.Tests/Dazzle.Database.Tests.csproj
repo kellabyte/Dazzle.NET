@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Specifications\with_empty_database.cs" />
     <Compile Include="when_selecting_all_where_firstname_equals_jane.cs" />
+    <Compile Include="when_selecting_firstname_and_lastname_where_firstname_equals_jane.cs" />
     <Compile Include="when_selecting_firstname_where_firstname_equals_jane.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Specifications\SpecificationContext.cs" />
