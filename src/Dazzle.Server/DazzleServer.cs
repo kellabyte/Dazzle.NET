@@ -12,7 +12,7 @@ namespace Dazzle.Server
         private DazzleDatabase db;
 
         public DazzleServer()
-            : this(new LevelDbStorage("c:\\tmp"))
+            : this(new LevelDBStorage("c:\\tmp"))
         {            
         }
 

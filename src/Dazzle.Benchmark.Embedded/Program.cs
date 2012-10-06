@@ -26,7 +26,8 @@ namespace Dazzle.Benchmark.Embedded
             if (preload && Directory.Exists(path))
                 Directory.Delete(path, true);
 
-            using (var storage = new InMemoryStorage())
+            //using (var storage = new LevelDBStorage(path))
+            using (var storage = new InMemoryStorage())            
             using (var db = new DazzleDatabase(storage))
             {
                 if (preload)

@@ -7,12 +7,12 @@ using LevelDB;
 
 namespace Dazzle.Storage
 {
-    public class LevelDbStorage : IStorage
+    public class LevelDBStorage : IStorage
     {
         private string path;
         private DB db;
 
-        public LevelDbStorage(string path)
+        public LevelDBStorage(string path)
         {
             this.path = path;
         }

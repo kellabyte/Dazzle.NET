@@ -24,7 +24,7 @@ namespace Dazzle
         private IStorage storage;
 
         public DazzleDatabase(string path)
-            : this(new LevelDbStorage(path))
+            : this(new LevelDBStorage(path))
         {
         }
 

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Storage\IStorage.cs" />
     <Compile Include="MessageType.cs" />
     <Compile Include="IDazzleDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

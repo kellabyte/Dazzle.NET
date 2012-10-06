@@ -62,6 +62,10 @@
     <Compile Include="Specifications\with_database_having_2_rows.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dazzle.Core\Dazzle.Core.csproj">
+      <Project>{a0ce73c4-0d5b-4a18-99f2-6768d7068a2b}</Project>
+      <Name>Dazzle.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dazzle.Database\Dazzle.Database.csproj">
       <Project>{ea5ce7f4-c5cc-460c-8f9a-a851e1729d9a}</Project>
       <Name>Dazzle.Database</Name>

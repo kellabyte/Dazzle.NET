@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Dazzle.Storage;
-using LevelDB;
 
 namespace Dazzle.Operations
 {
