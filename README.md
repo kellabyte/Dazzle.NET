@@ -112,4 +112,5 @@ guiding me but here's a list of things I know missing and other possibilities.
 - Implement Delete command.
 - Handling query errors.
   - Query engine is assuming success and that the table, columns specified actually exist. Need to do checks & throw errors.
+- Add TCP networking so that Dazzle can be a service as well as an embedded database.
 - Integrating Ring.io into Dazzle so that Dazzle becomes a distributed hash table cluster using Gossip protocol.
