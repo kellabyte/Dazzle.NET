@@ -100,4 +100,16 @@ Dazzle's query execution plan does the following:
 - Everything is a string. Types will be introduced soon.
 
 None of this is set in stone. My learning may lead me in different directions during this project.
- 
+
+## TODO
+There's no real hard set of TODO's because I'm not 100% sure what type of database I want to build. My learning is
+guiding me but here's a list of things I know missing and other possibilities.
+
+- Implement Create Database command.
+  - Right now there's no real concept of a database.
+- Implement Create Table command.
+  - Right now the DB has no real concept of a table.
+- Implement Delete command.
+- Handling query errors.
+  - Query engine is assuming success and that the table, columns specified actually exist. Need to do checks & throw errors.
+- Integrating Ring.io into Dazzle so that Dazzle becomes a distributed hash table cluster using Gossip protocol.
