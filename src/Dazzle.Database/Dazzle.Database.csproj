@@ -53,6 +53,8 @@
   <ItemGroup>
     <Compile Include="DazzleDatabase.cs" />
     <Compile Include="Extensions\SortedListExtensions.cs" />
+    <Compile Include="Operations\DeleteOperation.cs" />
+    <Compile Include="Operations\DeleteOperationBuilder.cs" />
     <Compile Include="Query\DqlQueryPlanBuilder.cs" />
     <Compile Include="Query\DqlQueryReader.cs" />
     <Compile Include="Query\DqlQueryGrammar.cs" />

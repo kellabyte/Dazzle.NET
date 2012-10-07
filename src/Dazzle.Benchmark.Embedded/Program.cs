@@ -18,7 +18,7 @@ namespace Dazzle.Benchmark.Embedded
         private static bool preload = true;
 
         private static string path = "c:\\tmp";
-        private static int rows = 2;
+        private static int rows = 10000;
         private static int columns = 2;
 
         private static void Main(string[] args)
@@ -33,7 +33,7 @@ namespace Dazzle.Benchmark.Embedded
                 if (preload)
                 {
                     PreloadData(storage);
-                    ShowData(storage);
+                    //ShowData(storage);
                 }
 
                 var result1 = ExecuteQuery(db, "select * from users where column0 = 'bob1' and column1 = 'bob1'");

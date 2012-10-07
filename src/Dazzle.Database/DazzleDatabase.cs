@@ -75,7 +75,8 @@ namespace Dazzle
             container.RegisterAll(typeof(IOperationBuilder), new Type[]
                 {
                     typeof(SelectOperationBuilder),
-                    typeof(UpdateOperationBuilder)
+                    typeof(UpdateOperationBuilder),
+                    typeof(DeleteOperationBuilder),
                 });
         }
 

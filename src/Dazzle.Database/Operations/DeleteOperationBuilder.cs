@@ -8,14 +8,14 @@ using Dazzle.Query;
 namespace Dazzle.Operations
 {
     /// <summary>
-    /// Builds an Update operation into the <see cref="QueryExecutionPlan"/> by reading the <see cref="ParseTreeNode"/>.
+    /// Builds a Delete operation into the <see cref="QueryExecutionPlan"/> by reading the <see cref="ParseTreeNode"/>.
     /// </summary>
-    public class UpdateOperationBuilder : IOperationBuilder
+    public class DeleteOperationBuilder : IOperationBuilder
     {
         /// <summary>
         /// The name of the operation in the abstract syntax tree.
         /// </summary>
-        public string OperationName { get { return "updateStmt"; } }
+        public string OperationName { get { return "deleteStmt"; } }
 
         /// <summary>
         /// Build the current operation in the <see cref="QueryExecutionPlan"/> by reading the abstract syntax tree.
@@ -25,24 +25,20 @@ namespace Dazzle.Operations
         /// <param name="plan">The current <see cref="QueryExecutionPlan"/> being built.</param>
         public void BuildOperation(Stack<string> scope, ParseTreeNode node, QueryExecutionPlan plan)
         {
-            UpdateOperation operation;
+            DeleteOperation operation;
 
             if (node.Term.Name == this.OperationName)
             {
-                // Update statement
-                operation = new UpdateOperation();
-                operation.TableName = node.ChildNodes[1].ChildNodes[0].Token.ValueString;
+                // Delete operation
+                operation = new DeleteOperation();
+                operation.TableName = node.ChildNodes[2].ChildNodes[0].Token.ValueString;
                 plan.Operations.Add(operation);
-                
+
             }
 
-            operation = (UpdateOperation) plan.Current;
+            operation = (DeleteOperation)plan.Current;
 
-            if (node.Term.Name == "assignment")
-            {
-                operation.Assignments.Add(node.ChildNodes[0].ChildNodes[0].Token.ValueString, node.ChildNodes[2].Token.ValueString);
-            }
-            else if (scope.Contains("whereClauseOpt") && node.Term.Name == "binExpr")
+            if (scope.Contains("whereClauseOpt") && node.Term.Name == "binExpr")
             {
                 // Where clause
                 if (node.ChildNodes[0].Term.Name == "binExpr")
