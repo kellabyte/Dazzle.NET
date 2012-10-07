@@ -8,20 +8,42 @@ using Dazzle;
 
 namespace Dazzle.Client
 {
-    public class DazzleDatabase : IDazzleDatabase
+    public class DazzleDatabase : IDazzleDatabase, IDisposable
     {
+        private bool disposed;
         private TcpClient client;
+
+        ~DazzleDatabase()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called. 
+            if (!this.disposed)
+            {
+                this.Close();
+                disposed = true;
+            }
+        }
 
         public void Open(string endPointAddress)
         {
             var endPoint = IPEndPointParser.Parse(endPointAddress);
-            client = new TcpClient();
-            client.Client.Connect(endPoint);
+            this.client = new TcpClient();
+            this.client.Client.Connect(endPoint);
         }
 
         public void Close()
         {
-            client.Close();
+            this.client.Close();
         }
 
         public string Get(string key)

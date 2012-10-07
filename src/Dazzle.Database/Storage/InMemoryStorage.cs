@@ -9,6 +9,7 @@ namespace Dazzle.Storage
 {
     public class InMemoryStorage : IStorage
     {
+        private bool disposed;
         private Dictionary<string, string> keys;
         private SortedList<string, string> keysSorted;
         private bool changed = false;
@@ -18,9 +19,25 @@ namespace Dazzle.Storage
             this.keys = new Dictionary<string, string>();
         }
 
+        ~InMemoryStorage()
+        {
+            Dispose(false);
+        }
+
         public void Dispose()
         {
-            this.keys.Clear();
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called. 
+            if (!this.disposed)
+            {
+                this.disposed = true;
+                this.keys.Clear();
+            }
         }
 
         /// <summary>
@@ -50,7 +67,7 @@ namespace Dazzle.Storage
         public void Put(string key, string value)
         {
             this.keys[key] = value;
-            changed = true;
+            this.changed = true;
         }
 
         /// <summary>
@@ -112,10 +129,10 @@ namespace Dazzle.Storage
         /// <returns>The enumerator that allows iterating the storage.</returns>
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator(string key)
         {
-            if (changed)
+            if (this.changed)
             {
                 this.keysSorted = new SortedList<string, string>(this.keys);
-                changed = false;
+                this.changed = false;
             }
             return this.keysSorted.GetEnumerator(key);
         }
