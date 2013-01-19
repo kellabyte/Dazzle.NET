@@ -94,7 +94,10 @@ namespace Dazzle.Operations
                     {
                         // TODO: Should do something here.
                     }
-                    enumerator.Dispose();
+                    finally
+                    {
+                        enumerator.Dispose();
+                    }
                 }
             }
 
@@ -112,9 +115,10 @@ namespace Dazzle.Operations
 
             foreach (var key in intersection)
             {
+                IEnumerator<KeyValuePair<string, string>> enumerator = null;
                 try
                 {
-                    var enumerator = storage.GetEnumerator(key);
+                    enumerator = storage.GetEnumerator(key);
                     enumerator.MoveNext();
 
                     string[] rowKeyComponents = key.Split('/');
@@ -131,7 +135,7 @@ namespace Dazzle.Operations
 
                         if (keyType == KeyType.Row)
                         {
-                                break;
+                            break;
                         }
                         else if (keyType == KeyType.ColumnValue && (selectAll || this.ColumnNames.Contains(keyComponents[3])))
                         {
@@ -144,6 +148,13 @@ namespace Dazzle.Operations
                 catch (AccessViolationException e)
                 {
                     // TODO: Should do something here.
+                }
+                finally
+                {
+                    if (enumerator != null)
+                    {
+                        enumerator.Dispose();
+                    }
                 }
             }
             return rows;

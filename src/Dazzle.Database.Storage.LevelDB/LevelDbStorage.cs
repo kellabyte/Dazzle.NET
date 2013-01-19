@@ -9,6 +9,7 @@ namespace Dazzle.Storage
 {
     public class LevelDBStorage : IStorage
     {
+        private bool disposed;
         private string path;
         private DB db;
 
@@ -29,11 +30,28 @@ namespace Dazzle.Storage
             }
         }
 
+        ~LevelDBStorage()
+        {
+            Dispose(false);
+        }
+
         public void Dispose()
         {
-            if (db != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called. 
+            if (!this.disposed)
             {
-                db.Dispose();
+                disposed = true;
+                if (this.db != null)
+                {
+                    this.db.Dispose();
+                    this.db = null;
+                }
             }
         }
 

@@ -35,8 +35,8 @@ namespace Dazzle
                 throw new ArgumentNullException("storage");
             }
             this.storage = storage;
-            Initialize();
-            Open();
+            this.Initialize();
+            this.Open();
         }
 
         ~DazzleDatabase()
@@ -46,7 +46,7 @@ namespace Dazzle
 
         public void Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -56,7 +56,7 @@ namespace Dazzle
             if (!this.disposed)
             {
                 this.Close();
-                disposed = true;
+                this.disposed = true;
             }
         }
 
@@ -66,13 +66,13 @@ namespace Dazzle
         private void Initialize()
         {
             // Composition root.
-            container = new Container();
-            container.Register<Grammar, DqlGrammar>();
-            container.Register<LanguageData>();
-            container.Register<IQueryProcessor, QueryProcessor>();
-            container.Register<DqlQueryReader>();
-            container.Register<DqlQueryPlanBuilder>();
-            container.RegisterAll(typeof(IOperationBuilder), new Type[]
+            this.container = new Container();
+            this.container.Register<Grammar, DqlGrammar>();
+            this.container.Register<LanguageData>();
+            this.container.Register<IQueryProcessor, QueryProcessor>();
+            this.container.Register<DqlQueryReader>();
+            this.container.Register<DqlQueryPlanBuilder>();
+            this.container.RegisterAll(typeof(IOperationBuilder), new Type[]
                 {
                     typeof(SelectOperationBuilder),
                     typeof(UpdateOperationBuilder),
@@ -85,9 +85,9 @@ namespace Dazzle
         /// </summary>
         private void Open()
         {
-            container.RegisterSingle<IStorage>(storage);
-            storage.Open();
-            opened = true;
+            this.container.RegisterSingle<IStorage>(storage);
+            this.storage.Open();
+            this.opened = true;
         }
 
         /// <summary>
@@ -97,8 +97,8 @@ namespace Dazzle
         {
             if (storage != null)
             {
-                storage.Dispose();
-                opened = false;
+                this.storage.Dispose();
+                this.opened = false;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Dazzle
             var watch = new Stopwatch();
             watch.Start();
 
-            if (!opened)
+            if (!this.opened)
             {
                 this.Open();
             }

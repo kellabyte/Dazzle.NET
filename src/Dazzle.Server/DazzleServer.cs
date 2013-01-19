@@ -7,8 +7,9 @@ using Dazzle.Storage;
 
 namespace Dazzle.Server
 {
-    public class DazzleServer : AsyncTcpServer
+    public class DazzleServer : AsyncTcpServer, IDisposable
     {
+        private bool disposed;
         private DazzleDatabase db;
 
         public DazzleServer()
@@ -20,6 +21,31 @@ namespace Dazzle.Server
             : base(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 5223))
         {
             db = new DazzleDatabase(storage);
+        }
+
+        ~DazzleServer()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            // Check to see if Dispose has already been called. 
+            if (!this.disposed)
+            {
+                this.disposed = true;
+                if (this.db != null)
+                {
+                    this.db.Dispose();
+                    this.db = null;
+                }
+            }
         }
 
         protected override void HandleData(byte[] data, System.Net.Sockets.TcpClient client)

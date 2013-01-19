@@ -8,13 +8,5 @@ namespace Dazzle.Database.Tests.Specifications
 {
     public abstract class with_empty_database : SpecificationContext
     {
-        protected IStorage storage;
-        protected DazzleDatabase db;
-
-        public override void Given()
-        {
-            this.storage = new InMemoryStorage();
-            this.db = new DazzleDatabase(this.storage);
-        }
     }
 }
